@@ -11,7 +11,7 @@ import {
 } from '../config'
 
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
-import Market from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json'
+import Market from '../artifacts/contracts/Market.sol/NFTMarket.json'
 
 export default function CreateItem() {
   const [fileUrl, setFileUrl] = useState(null)
@@ -60,6 +60,7 @@ export default function CreateItem() {
     let contract = new ethers.Contract(nftaddress, NFT.abi, signer)
     let transaction = await contract.createToken(url)
     let tx = await transaction.wait()
+    console.log({ tx });
     let event = tx.events[0]
     let value = event.args[2]
     let tokenId = value.toNumber()
